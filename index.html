@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="margin: 20px;">
+    
+
+    <input type="text" id="message">
+    <button id="send">Send</button>
+
+    <div id="srv_answer" style="outline: 1px solid crimson; min-height: 100px;padding: 5px;margin-top: 10px;"></div>
+
+    <script>
+        // connect to the websocket server on 127.0.0.1:8080
+        const ws = new WebSocket('ws://127.0.0.1:8080');
+        // listen for messages
+        ws.onmessage = (event) => {
+            document.getElementById('srv_answer').innerHTML = event.data;
+        };
+
+        // send a message to the server once the connection is open
+        ws.onopen = () => {
+            // we can send a message to the server here once the connection is open
+            // ws.send('Hello World!');
+        
+        };
+
+        // send a message to the server when the user clicks the button
+        document.getElementById('send').addEventListener('click', () => {
+            ws.send(document.getElementById('message').value);
+
+        });
+
+    </script>
+</body>
+</html>
